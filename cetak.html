@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pesanan Anda - Toko Sembako Bule</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --navy: #0A192F;
+            --navy-light: #172A45;
+            --gold: #D4AF37;
+            --white: #ffffff;
+            --text-muted: #8892B0;
+            --bg-body: #fafafa;
+            --success: #00cc66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==========================================
+           PAGE CONTAINER - DIPERBAIKI
+           ========================================== */
+        .page-container {
+            max-width: 1200px;
+            margin: 100px auto 50px auto;
+            padding: 0 20px;
+            min-height: 65vh;
+            flex: 1;
+        }
+
+        .page-title {
+            color: var(--navy);
+            margin-bottom: 35px;
+            font-size: 28px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .page-title i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        /* ==========================================
+           RIWAYAT CONTENT AREA
+           ========================================== */
+        #riwayatContentArea {
+            min-height: 300px;
+            margin-top: 20px;
+        }
+
+        /* ==========================================
+           ALERT SYSTEM
+           ========================================== */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-success {
+            background-color: #e6fffa;
+            color: #234e52;
+            border-color: #00cc66;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================================
+           TABLE STYLING - DIPERBAIKI AGAR TIDAK KEPOTONG
+           ========================================== */
+        .table-responsive {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 700px;
+            font-size: 14px;
+        }
+
+        .cart-table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            padding: 12px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-bottom: 2px solid #edf2f7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .cart-table td {
+            padding: 14px;
+            border-bottom: 1px solid #edf2f7;
+            color: #2d3748;
+            vertical-align: middle;
+            word-break: break-word;
+        }
+
+        .cart-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .cart-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .cart-table td:first-child {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .cart-table td:nth-child(2) {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .cart-table td:nth-child(3) {
+            max-width: 200px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cart-table td:nth-child(4) {
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        .cart-table td:nth-child(5) {
+            white-space: nowrap;
+        }
+
+        .cart-table td:last-child {
+            white-space: nowrap;
+        }
+
+        /* ==========================================
+           BUTTON STYLING
+           ========================================== */
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 12px;
+            border: 1px solid var(--navy);
+            color: var(--navy);
+            background: transparent;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--navy);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(10, 25, 47, 0.2);
+        }
+
+        /* ==========================================
+           EMPTY STATE
+           ========================================== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-state i {
+            font-size: 72px;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: var(--navy);
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 10px 0 25px 0;
+        }
+
+        /* ==========================================
+           BADGE STATUS
+           ========================================== */
+        .badge-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* ==========================================
+           STRUK CONTAINER - DIPERBAIKI
+           ========================================== */
+        .struk-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .struk-container {
+            width: 320px;
+            max-width: 100%;
+            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: #000;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            border-top: 6px solid #0A192F;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tombol Cetak */
+        .btn-print-wrapper {
+            width: 320px;
+            max-width: 100%;
+            margin: 0 auto 15px auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-print {
+            flex: 1;
+            background: #0A192F;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-print:hover {
+            background: #172A45;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
+        }
+
+        .btn-print i {
+            font-size: 16px;
+        }
+
+        .btn-back {
+            flex: 0 0 auto;
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-back:hover {
+            background: #cbd5e1;
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+        
+        .bold {
+            font-weight: bold;
+        }
+        
+        .line {
+            border-top: 1px dashed #000;
+            margin: 10px 0;
+        }
+        
+        .flex-space {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .items-table {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .items-table td {
+            padding: 3px 0;
+            vertical-align: top;
+        }
+
+        /* ==========================================
+           PRINT STYLES - DIPERBAIKI
+           ========================================== */
+        @media print {
+            /* Sembunyikan elemen yang tidak perlu saat print */
+            .top-navbar,
+            .sidebar-overlay,
+            .left-sidebar,
+            .btn-print-wrapper,
+            .btn-back,
+            .page-title,
+            .breadcrumb {
+                display: none !important;
+            }
+
+            /* Reset body untuk print */
+            body {
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .page-container {
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+
+            .struk-wrapper {
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .struk-container {
+                border: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                padding: 20px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+                border-top: none !important;
+            }
+
+            /* Force ukuran struk agar rapi di kertas */
+            .struk-container > div {
+                width: 100% !important;
+                max-width: 320px !important;
+                margin: 0 auto !important;
+            }
+
+            /* Pastikan teks terlihat */
+            .struk-container * {
+                color: #000 !important;
+            }
+
+            /* Halaman print */
+            @page {
+                margin: 0.5cm;
+                size: auto;
+            }
+
+            /* Hindari page break di tengah struk */
+            .struk-container {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media screen and (max-width: 768px) {
+            .page-container {
+                margin: 80px auto 30px auto;
+                padding: 0 15px;
+            }
+
+            .page-title {
+                font-size: 22px;
+            }
+
+            .table-responsive {
+                padding: 12px;
+            }
+
+            .cart-table {
+                font-size: 12px;
+                min-width: 600px;
+            }
+
+            .cart-table th {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+
+            .cart-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .cart-table td:nth-child(3) {
+                max-width: 150px;
+                font-size: 11px;
+            }
+
+            .btn-outline {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+
+            .btn-print-wrapper {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn-print,
+            .btn-back {
+                width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .page-container {
+                margin: 70px auto 20px auto;
+                padding: 0 10px;
+            }
+
+            .page-title {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .struk-container {
+                padding: 15px;
+                width: 100%;
+            }
+        }
+
+        /* ==========================================
+           NAVBAR STYLES
+           ========================================== */
+        .top-navbar {
+            background: var(--navy);
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--gold);
+        }
+
+        .nav-menu-desktop {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu-desktop a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu-desktop a:hover {
+            color: var(--gold);
+        }
+
+        .nav-icons-desktop {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-link {
+            color: var(--white);
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-register {
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-register:hover {
+            background: #c5a037;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .dropbtn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: var(--white);
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 8px 0;
+            z-index: 1001;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-content .text-error {
+            color: #dc2626;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .left-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: var(--navy);
+            z-index: 2001;
+            transition: left 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-brand {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .sidebar-brand span {
+            color: var(--gold);
+        }
+
+        .sidebar-close-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .sidebar-menu-list li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gold);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-action-btn.text-error {
+            color: #dc2626;
+        }
+
+        .sidebar-user-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .user-name {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        @media screen and (max-width: 992px) {
+            .nav-menu-desktop {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .nav-icons-desktop .btn-login,
+            .nav-icons-desktop .btn-register {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP HORIZONTAL NAVBAR -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <button class="menu-toggle" id="open-sidebar-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="nav-brand">Sembako<span>Bule</span></a>
+
+            <ul class="nav-menu-desktop">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang Kami</a></li>
+                <li><a href="index.html#kategori">Kategori</a></li>
+                <li><a href="index.html#produk">Produk Terbaru</a></li>
+                <li><a href="index.html#kontak">Lokasi</a></li>
+                <li><a href="index.html#testimoni">Testimoni</a></li>
+            </ul>
+
+            <div class="nav-icons-desktop">
+                <a href="cart.html" class="icon-link">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+                <div id="auth-guest-links" style="display: flex; gap: 10px; align-items: center;">
+                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="register.html" class="btn-register">Daftar</a>
+                </div>
+
+                <div class="dropdown" id="auth-user-dropdown" style="display: none;">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-nav-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="profil.html"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                        <a href="riwayat.html"><i class="fas fa-history"></i> Riwayat Pesanan</a>
+                        <a href="#" class="text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="left-sidebar" id="mobile-left-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">Sembako<span>Bule</span></a>
+            <button class="sidebar-close-btn" id="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu-list">
+                <li><a href="index.html#home" class="sidebar-link"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                <li><a href="index.html#kategori" class="sidebar-link"><i class="fas fa-th-large"></i> <span>Kategori</span></a></li>
+                <li><a href="index.html#produk" class="sidebar-link"><i class="fas fa-box-open"></i> <span>Produk Terbaru</span></a></li>
+                <li><a href="index.html#kontak" class="sidebar-link"><i class="fas fa-map-marker-alt"></i> <span>Lokasi Outlet</span></a></li>
+                <li><a href="index.html#tentang" class="sidebar-link"><i class="fas fa-info-circle"></i> <span>Tentang Toko</span></a></li>
+                <li><a href="index.html#testimoni" class="sidebar-link"><i class="fas fa-comment-dots"></i> <span>Testimoni</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div style="padding: 0 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">Keranjang Belanja</span>
+                <a href="cart.html" style="color: var(--gold); font-size: 18px;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+            <div id="sidebar-user-logged" style="display: none; width: 100%;">
+                <div class="sidebar-user-badge">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: var(--gold);"></i>
+                    <div class="user-details">
+                        <span class="user-name" id="user-sidebar-name">User Name</span>
+                    </div>
+                </div>
+                <a href="profil.html" class="sidebar-action-btn"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                <a href="riwayat.html" class="sidebar-action-btn"><i class="fas fa-history"></i> Riwayat</a>
+                <a href="#" class="sidebar-action-btn text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+            <div id="sidebar-guest-buttons" style="display: flex; gap: 10px; flex-direction: column; width: 100%;">
+                <a href="login.html" class="sidebar-action-btn" style="background: var(--gold); color: white; text-align: center; justify-content: center;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="register.html" class="sidebar-action-btn" style="background: rgba(197,160,89,0.2); color: var(--gold); text-align: center; border: 1px solid var(--gold); justify-content: center;">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==========================================
+    STRUK TAMPILAN - DIPERBAIKI DENGAN TOMBOL CETAK
+    ========================================== -->
+    <div class="page-container">
+        <h2 class="page-title">
+            <i class="fas fa-receipt"></i> Detail Pesanan & Struk
+        </h2>
+
+        <div class="struk-wrapper">
+            <!-- TOMBOL CETAK & KEMBALI -->
+            <div class="btn-print-wrapper">
+                <button class="btn-print" onclick="window.print()">
+                    <i class="fas fa-print"></i> Cetak Struk
+                </button>
+                <button class="btn-back" onclick="window.location.href='riwayat.html'">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </button>
+            </div>
+
+            <!-- KONTAINER STRUK -->
+            <div class="struk-container" id="strukContent">
+                <p class="text-center">Memuat data struk...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStruk();
+        });
+
+        function renderStruk() {
+            const container = document.getElementById('strukContent');
+
+            // 1. Ambil ID Order dari URL Parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+
+            if (!orderId) {
+                container.innerHTML = `<p class="text-center bold" style="color: red;">ID Pesanan tidak ditemukan.</p>`;
+                return;
+            }
+
+            // 2. Ambil semua data orders dari localStorage
+            const allOrders = JSON.parse(localStorage.getItem('sembako_orders') || '[]');
+
+            // 3. Cari order yang ID-nya cocok
+            const order = allOrders.find(o => (o.id_order === orderId || o.id === orderId));
+
+            if (!order) {
+                container.innerHTML = `<p class="text-center bold" style="color: red;">Maaf, data pesanan tidak ditemukan.</p>`;
+                return;
+            }
+
+            // 4. Parsing data items
+            let items = [];
+            try {
+                items = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []);
+            } catch (e) {
+                console.error("Gagal parse items:", e);
+            }
+
+            // 5. Format Tanggal
+            let dateStr = 'N/A';
+            const possibleDateFields = ['order_date', 'checkout_date', 'created_at', 'createdAt', 'date', 'tanggal'];
+            for (const field of possibleDateFields) {
+                if (order[field]) {
+                    const dateObj = new Date(order[field]);
+                    if (!isNaN(dateObj)) {
+                        dateStr = dateObj.toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'short',
+                            year: 'numeric'
+                        });
+                        break;
+                    }
+                }
+            }
+            if (dateStr === 'N/A') {
+                dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+            }
+
+            // 6. Ambil Data Tambahan
+            const displayId = orderId.includes('-') ? orderId.split('-')[1] : orderId;
+            const totalHarga = parseInt(order.total_price || order.total || order.total_harga || 0);
+            const statusText = (order.status_order || order.status || 'pending').toUpperCase();
+
+            // Tentukan warna badge status secara dinamis
+            let statusColor = '#dc2626';
+            let statusBg = '#fee2e2';
+            if (statusText === 'PAID' || statusText === 'SELESAI' || statusText === 'SUCCESS' || statusText === 'COMPLETED') {
+                statusColor = '#059669';
+                statusBg = '#d1fae5';
+            } else if (statusText === 'PENDING' || statusText === 'MENUNGGU') {
+                statusColor = '#d97706';
+                statusBg = '#fef3c7';
+            } else if (statusText === 'SHIPPED' || statusText === 'DIKIRIM' || statusText === 'PROSES') {
+                statusColor = '#2563eb';
+                statusBg = '#dbeafe';
+            }
+
+            // 7. Susun HTML Struk
+            let itemRows = '';
+            if (items && items.length > 0) {
+                items.forEach(item => {
+                    const name = item.name || item.nama_produk || "Produk";
+                    const qty = item.qty || item.quantity || 0;
+                    const price = parseInt(item.price || item.harga || 0);
+                    const subtotal = qty * price;
+
+                    itemRows += `
+                        <tr>
+                            <td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #334155;">
+                                <span style="font-weight: 600; color: #0f172a;">${name}</span><br>
+                                <small style="color: #64748b;">${qty}x @Rp ${price.toLocaleString('id-ID')}</small>
+                            </td>
+                            <td style="text-align: right; vertical-align: bottom; padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 700; color: #0f172a;">
+                                Rp ${subtotal.toLocaleString('id-ID')}
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
+                itemRows = `
+                    <tr>
+                        <td colspan="2" style="text-align: center; padding: 10px; color: #64748b;">
+                            Tidak ada item
+                        </td>
+                    </tr>
+                `;
+            }
+
+            const htmlContent = `
+                <div style="width: 100%; font-family: 'Poppins', sans-serif; background: #ffffff;">
+                    <!-- Header Struk -->
+                    <div class="text-center" style="margin-bottom: 15px;">
+                        <h2 style="margin: 0 0 3px 0; color: #0A192F; font-size: 20px; font-weight: 800; letter-spacing: 0.5px;">TOKO SEMBAKO Bule</h2>
+                        <p style="margin: 0; font-size: 11px; color: #64748b;">Perum Jl. Rajeg Asri No.11 Blok A10, Rajeg, Kec. Rajeg, Kabupaten Tangerang, Banten 15540</p>
+                      
+                    </div>
+
+                    <div style="border-top: 2px dashed #cbd5e1; margin: 12px 0;"></div>
+
+                    <!-- Informasi Pesanan -->
+                    <div style="font-size: 12px; color: #475569; line-height: 2;">
+                        <div class="flex-space">
+                            <span>No. Nota:</span>
+                            <span style="font-weight: 700; color: #0f172a;">#${displayId}</span>
+                        </div>
+                        <div class="flex-space">
+                            <span>Tanggal:</span>
+                            <span style="font-weight: 600;">${dateStr}</span>
+                        </div>
+                        <div class="flex-space">
+                            <span>Pelanggan:</span>
+                            <span style="font-weight: 600;">${order.username || order.full_name || 'Umum'}</span>
+                        </div>
+                        <div class="flex-space" style="align-items: center;">
+                            <span>Status:</span>
+                            <span style="color: ${statusColor}; background-color: ${statusBg}; font-weight: 700; font-size: 11px; padding: 2px 12px; border-radius: 20px;">${statusText}</span>
+                        </div>
+                    </div>
+
+                    <div style="border-top: 2px dashed #cbd5e1; margin: 12px 0;"></div>
+
+                    <!-- Item Pesanan -->
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #e2e8f0;">
+                                <th style="text-align: left; padding: 6px 0; font-size: 12px; color: #64748b; font-weight: 600;">Produk</th>
+                                <th style="text-align: right; padding: 6px 0; font-size: 12px; color: #64748b; font-weight: 600;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemRows}
+                        </tbody>
+                    </table>
+
+                    <div style="border-top: 2px dashed #cbd5e1; margin: 10px 0 12px 0;"></div>
+
+                    <!-- Total -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; padding: 5px 0;">
+                        <span style="font-weight: 700; color: #64748b;">TOTAL:</span>
+                        <span style="font-weight: 800; font-size: 20px; color: #0A192F;">Rp ${totalHarga.toLocaleString('id-ID')}</span>
+                    </div>
+
+                    <div style="border-top: 2px dashed #cbd5e1; margin: 12px 0 15px 0;"></div>
+
+                    <!-- Footer -->
+                    <div class="text-center" style="font-size: 12px; text-align: center;">
+                        <p style="font-weight: 800; color: #D4AF37; margin: 0 0 4px 0; font-size: 14px; letter-spacing: 0.5px;">TERIMA KASIH SUDAH PERCAYA DENGAN TOKO KAMI</p>
+                        <p style="margin: 0; color: #94a3b8; font-size: 11px;">Selamat Berbelanja Kembali</p>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = htmlContent;
+        }
+    </script>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/riwayat.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Toko Sembako Bule</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ==========================================
+   ALERT STYLES
+   ========================================== */
+.alert {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: none;
+    font-size: 15px;
+    font-weight: 500;
+    animation: slideDown 0.3s ease;
+    line-height: 1.6;
+    transition: opacity 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Alert Error - WARNA MERAH */
+.alert-error {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-left: 5px solid #dc2626;
+}
+
+.alert-error p {
+    margin: 0;
+}
+
+/* Alert Success - WARNA HIJAU */
+.alert-success {
+    background: #dcfce7;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    border-left: 5px solid #16a34a;
+}
+
+.alert-success p {
+    margin: 0;
+}
+    </style>
+   
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <h2 class="auth-title">Selamat Datang di <br>Toko Sembako <span>Bule</span></h2>
+            
+            <div class="alert alert-error" id="alert-error">
+                <p>Username atau password salah!</p>
+            </div>
+
+            <div class="alert alert-success" id="alert-success">
+                <p>Login berhasil! Selamat datang kembali.</p>
+            </div>
+
+            <form id="loginForm" onsubmit="validateUserLogin(event)">
+                <input type="hidden" name="action" value="login">
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" name="username" class="form-control" required placeholder="Masukkan username Anda">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required placeholder="Masukkan password Anda">
+                </div>
+
+                <button type="submit" class="btn-primary" id="btn-login">Login</button>
+            </form>
+
+            <div class="auth-link">
+                Belum punya akun? <a href="register.html">Daftar sekarang</a>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/auth.js"></script>
+
+    
+</body>
+</html>

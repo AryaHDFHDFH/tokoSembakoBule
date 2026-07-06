@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya - Toko Sembako Bule</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-navbar {
+            background-color: var(--navy);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .nav-brand {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--gold);
+        }
+
+        .nav-menu-desktop {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu-desktop a {
+            color: #CCD6F6;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-menu-desktop a:hover {
+            color: var(--gold);
+        }
+
+        .nav-icons-desktop {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    
+    <!-- TOP HORIZONTAL NAVBAR -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <button class="menu-toggle" id="open-sidebar-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="nav-brand">Sembako<span>Bule</span></a>
+
+            <ul class="nav-menu-desktop">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang Kami</a></li>
+                   <li><a href="index.html#kategori">Kategori</a></li>
+                <li><a href="index.html#produk">Produk Terbaru</a></li>
+                <li><a href="index.html#kontak">Lokasi</a></li>
+                <li><a href="index.html#testimoni">Testimoni</a></li>
+            </ul>
+
+            <div class="nav-icons-desktop">
+                <a href="cart.html" class="icon-link">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+              
+                <div id="auth-guest-links" style="display: flex; gap: 10px; align-items: center;">
+                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="register.html" class="btn-register">Daftar</a>
+                </div>
+
+                <!-- KONDISI 2: USER DROPDOWN (TAMPIL SAAT SUDAH LOGIN) -->
+                <div class="dropdown" id="auth-user-dropdown" style="display: none;">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-nav-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    </button>
+
+                    <div class="dropdown-content">
+                        <a href="profil.html">
+                            <i class="fas fa-id-badge"></i> Profil Saya
+                        </a>
+                        <a href="riwayat.html">
+                            <i class="fas fa-history"></i> Riwayat Pesanan
+                        </a>
+                        <a href="#" class="text-error btn-logout-action">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR OVERLAY & MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="left-sidebar" id="mobile-left-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">Sembako<span>Bule</span></a>
+            <button class="sidebar-close-btn" id="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu-list">
+                <li>
+                    <a href="index.html#home" class="sidebar-link">
+                        <i class="fas fa-home"></i> <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#kategori" class="sidebar-link">
+                        <i class="fas fa-th-large"></i> <span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#produk" class="sidebar-link">
+                        <i class="fas fa-box-open"></i> <span>Produk Terbaru</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#kontak" class="sidebar-link">
+                        <i class="fas fa-map-marker-alt"></i> <span>Lokasi Outlet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#tentang" class="sidebar-link">
+                        <i class="fas fa-info-circle"></i> <span>Tentang Toko</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#testimoni" class="sidebar-link">
+                        <i class="fas fa-comment-dots"></i> <span>Testimoni</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div style="padding: 0 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">Keranjang Belanja</span>
+                <a href="cart.html" style="color: var(--gold); font-size: 18px;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+
+            <!-- KONDISI USER LOGIN (MOBILE SIDEBAR) -->
+            <div id="sidebar-user-logged" style="display: none; width: 100%;">
+                <div class="sidebar-user-badge" style="margin-bottom: 15px;">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: var(--gold);"></i>
+                    <div class="user-details">
+                        <span class="user-name" id="user-sidebar-name">User Name</span>
+                    </div>
+                </div>
+                <a href="profil.html" class="sidebar-action-btn"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                <a href="riwayat.html" class="sidebar-action-btn"><i class="fas fa-history"></i> Riwayat</a>
+                <a href="#" class="sidebar-action-btn text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+
+            <!-- KONDISI GUEST LINKS (MOBILE SIDEBAR) -->
+            <div id="sidebar-guest-buttons" style="display: flex; gap: 10px; flex-direction: column; width: 100%;">
+                <a href="login.html" class="sidebar-action-btn" style="background: var(--gold); color: white; text-align: center;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="register.html" class="sidebar-action-btn" style="background: rgba(197,160,89,0.2); color: var(--gold); text-align: center; border: 1px solid var(--gold);">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT PADDING -->
+    <div style="padding-top: 60px;"></div>
+
+    <main class="page-container">
+        <div class="profile-card">
+            <form id="profileForm">
+
+                <div class="form-group">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="profileFullName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="profileEmail" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>No. Telepon / WhatsApp</label>
+                    <input type="text" id="profilePhone" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Alamat Lengkap</label>
+                    <textarea id="profileAddress" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">Simpan Perubahan</button>
+            </form>
+        </div>
+    </main>
+    <script src="assets/js/auth.js"></script>
+
+    <script src="assets/js/profil.js"></script>
+
+    <script src="assets/js/sidebar.js"></script>
+</body>
+
+</html>

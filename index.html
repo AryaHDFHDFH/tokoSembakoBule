@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Sembako Bule - Premium Toko Sembako</title>
+       <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google Font & Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS Studio Style -->
+</head>
+
+<body>
+
+    <!-- TOP HORIZONTAL NAVBAR -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <button class="menu-toggle" id="open-sidebar-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="nav-brand">Sembako<span>Bule</span></a>
+
+            <ul class="nav-menu-desktop">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang Kami</a></li>
+                   <li><a href="index.html#kategori">Kategori</a></li>
+                <li><a href="index.html#produk">Produk Terbaru</a></li>
+                <li><a href="index.html#kontak">Lokasi</a></li>
+                <li><a href="index.html#testimoni">Testimoni</a></li>
+            </ul>
+
+            <div class="nav-icons-desktop">
+                <a href="cart.html" class="icon-link">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+              
+                <div id="auth-guest-links" style="display: flex; gap: 10px; align-items: center;">
+                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="register.html" class="btn-register">Daftar</a>
+                </div>
+
+                <!-- KONDISI 2: USER DROPDOWN (TAMPIL SAAT SUDAH LOGIN) -->
+                <div class="dropdown" id="auth-user-dropdown" style="display: none;">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-nav-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    </button>
+
+                    <div class="dropdown-content">
+                        <a href="profil.html">
+                            <i class="fas fa-id-badge"></i> Profil Saya
+                        </a>
+                        <a href="riwayat.html">
+                            <i class="fas fa-history"></i> Riwayat Pesanan
+                        </a>
+                        <a href="#" class="text-error btn-logout-action">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR OVERLAY & MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="left-sidebar" id="mobile-left-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">Sembako<span>Bule</span></a>
+            <button class="sidebar-close-btn" id="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu-list">
+                <li>
+                    <a href="index.html#home" class="sidebar-link">
+                        <i class="fas fa-home"></i> <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#kategori" class="sidebar-link">
+                        <i class="fas fa-th-large"></i> <span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#produk" class="sidebar-link">
+                        <i class="fas fa-box-open"></i> <span>Produk Terbaru</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#kontak" class="sidebar-link">
+                        <i class="fas fa-map-marker-alt"></i> <span>Lokasi Outlet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#tentang" class="sidebar-link">
+                        <i class="fas fa-info-circle"></i> <span>Tentang Toko</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#testimoni" class="sidebar-link">
+                        <i class="fas fa-comment-dots"></i> <span>Testimoni</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div style="padding: 0 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">Keranjang Belanja</span>
+                <a href="cart.html" style="color: var(--gold); font-size: 18px;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+
+            <!-- KONDISI USER LOGIN (MOBILE SIDEBAR) -->
+            <div id="sidebar-user-logged" style="display: none; width: 100%;">
+                <div class="sidebar-user-badge" style="margin-bottom: 15px;">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: var(--gold);"></i>
+                    <div class="user-details">
+                        <span class="user-name" id="user-sidebar-name">User Name</span>
+                    </div>
+                </div>
+                <a href="profil.html" class="sidebar-action-btn"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                <a href="riwayat.html" class="sidebar-action-btn"><i class="fas fa-history"></i> Riwayat</a>
+                <a href="#" class="sidebar-action-btn text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+
+            <!-- KONDISI GUEST LINKS (MOBILE SIDEBAR) -->
+            <div id="sidebar-guest-buttons" style="display: flex; gap: 10px; flex-direction: column; width: 100%;">
+                <a href="login.html" class="sidebar-action-btn" style="background: var(--gold); color: white; text-align: center;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="register.html" class="sidebar-action-btn" style="background: rgba(197,160,89,0.2); color: var(--gold); text-align: center; border: 1px solid var(--gold);">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT PADDING -->
+    <div style="padding-top: 60px;"></div>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="hero-section">
+        <div class="hero-content" style="max-width: 800px; margin: 0 auto; text-align: center; padding: 80px 20px;">
+            <span style="color: var(--gold, #C5A059); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">Premium Toko Sembako</span>
+            <h1>Bahan Pokok <span>Terbaik</span><br>Untuk Keluarga Anda</h1>
+            <p>Toko Sembako Bule menghadirkan kualitas bahan pangan pilihan dengan standar kebersihan tinggi dan pengemasan premium.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                <a href="#produk" class="btn-primary hero-btn" style="padding: 12px 30px; background: var(--gold, #C5A059); color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TENTANG / FILOSOFI SECTION -->
+    
+<section id="tentang" style="padding: 100px 0; background: #fff; overflow: hidden;">
+    <div class="product-section">
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 60px; align-items: center;">
+
+            <div style="position: relative;" data-aos="fade-right">
+
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800"
+                    alt="Filosofi Sembako Bule"
+                    style="width: 100%; border-radius: 30px; box-shadow: 30px 30px 0 var(--gold-admin); position: relative; z-index: 2;">
+
+                <div style="position: absolute; bottom: -20px; left: -20px; background: var(--navy); color: white; padding: 25px; border-radius: 15px; z-index: 3; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"
+                    data-aos="zoom-in" data-aos-delay="500">
+                    <h3 style="margin: 0; font-size: 28px; color: var(--gold);">#1</h3>
+                    <p style="margin: 0; font-size: 14px; opacity: 0.8;">Pilihan Keluarga</p>
+                </div>
+            </div>
+
+            <div data-aos="fade-left">
+                <span
+                    style="color: var(--gold); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; font-size: 14px; ">Filosofi
+                    Kami</span>
+                <h2 style="font-size: 42px; color: var(--navy); margin: 15px 0 25px; line-height: 1.2;">
+                    Lebih Dari Sekadar <span>Toko Sembako</span> Biasa
+                </h2>
+                <bold style="color: #555; line-height: 1.8; margin-bottom: 20px; font-size: 17px;">
+                    Berawal dari dedikasi untuk menghadirkan pengalaman belanja yang lebih baik, Toko Sembako Bule
+                    hadir mendekatkan bahan pangan berkualitas premium ke pintu rumah Anda melalui kemudahan platform
+                    digital.
+                </bold>
+                <p style="color: #666; line-height: 1.8; margin-bottom: 30px;">
+                    Bagi kami, kebahagiaan keluarga Anda adalah prioritas. Kami memastikan setiap bahan pangan yang Anda
+                    terima selalu dalam kondisi bersih, segar, dan dikemas dengan penuh kasih sayang melalui proses
+                    seleksi yang amat ketat sejak dari hulu.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+                        <span style="font-weight: 600; color: var(--navy);">Higiene Terjaga</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+                        <span style="font-weight: 600; color: var(--navy);">Sumber Lokal</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+                        <span style="font-weight: 600; color: var(--navy);">Packing Premium</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-check-circle" style="color: var(--gold);"></i>
+                        <span style="font-weight: 600; color: var(--navy);">Harga Jujur</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <a href="#produk" class="btn-primary"
+                        style="padding: 15px 35px; border-radius: 50px; text-decoration: none; display: inline-block;">
+                        Jelajahi Produk <i class="fas fa-chevron-right" style="font-size: 12px; margin-left: 10px;"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="kategori" style="padding: 100px 0; background: #fff; overflow: hidden;">
+ <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 20px;">
+        <h2 style="margin: 0; color: #001233; font-weight: 700; font-family: sans-serif; font-size: 28px;">Kategori<span style="color: #ffcc00;">Tersedia</span></h2>
+      
+    </div>
+<div class="category-grid-container">
+    <!-- Card 1 -->
+    <a href="produk.html?id=1" class="category-card-box">
+        <div class="category-icon-wrapper">
+            <i class="fas fa-wheat-alt"></i>
+        </div>
+        <div class="category-info-text">
+            <h3 class="category-name-title">Bahan Pokok (Utama)</h3>
+             <p class="category-product-count">0 Produk</p>
+            
+        </div>
+    </a>
+
+    <!-- Card 2 -->
+    <a href="produk.html?id=2" class="category-card-box">
+        <div class="category-icon-wrapper">
+            <i class="fas fa-utensils"></i>
+        </div>
+        <div class="category-info-text">
+            <h3 class="category-name-title">Mie, Pasta & Makanan Instan</h3>
+            <p class="category-product-count">0 Produk</p>
+        </div>
+    </a>
+
+    <!-- Card 3 -->
+    <a href="produk.html?id=3" class="category-card-box">
+        <div class="category-icon-wrapper">
+            <i class="fas fa-egg"></i>
+        </div>
+        <div class="category-info-text">
+            <h3 class="category-name-title">Produk Susu & Telur (Dairy & Eggs)</h3>
+            <p class="category-product-count">0 Produk</p>
+        </div>
+    </a>
+
+    <!-- Card 4 -->
+    <a href="produk.html?id=4" class="category-card-box">
+        <div class="category-icon-wrapper">
+            <i class="fas fa-pepper-hot"></i>
+        </div>
+        <div class="category-info-text">
+            <h3 class="category-name-title">Bumbu Dapur & Penyedap</h3>
+            <p class="category-product-count">0 Produk</p>
+        </div>
+    </a>
+
+    <!-- Card 5 -->
+    <a href="produk.html?id=5" class="category-card-box">
+        <div class="category-icon-wrapper">
+            <i class="fas fa-coffee"></i>
+        </div>
+        <div class="category-info-text">
+            <h3 class="category-name-title">Minuman & Pendamping (Beverages)</h3>
+            <p class="category-product-count">0 Produk</p>
+        </div>
+    </a>
+
+    <!-- Card 6 -->
+    <a href="produk.html?id=6" class="category-card-box">
+        <div class="category-icon-wrapper">
+            <i class="fas fa-pump-soap"></i>
+        </div>
+        <div class="category-info-text">
+            <h3 class="category-name-title">Perlengkapan Rumah Tangga (Home Care)</h3>
+            <p class="category-product-count">0 Produk</p>
+        </div>
+    </a>
+</section> 
+
+
+<section id="produk" class="product-section" style="padding: 100px 0; background-color: #f8fafc;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 20px;">
+        <h2 style="margin: 0; color: #0A192F; font-weight: 700; font-family: 'Poppins', sans-serif; font-size: 28px;">
+            Produk <span style="color: #F5A623;">Terbaru</span>
+        </h2>
+        <a href="produk.html" style="color: #F5A623; font-weight: 600; font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 5px; transition: 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+            Lihat Semua <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <div class="product-grid" id="latestProductGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        </div>
+</section>
+
+ <script src="assets/js/home-products.js"></script> 
+
+
+    <!-- KONTAK / LOKASI SECTION -->
+    <section id="kontak" style="padding: 100px 0; background: linear-gradient(135deg, var(--navy, #0D1B2A) 0%, #1a1a2e 100%); color: white;">
+        <div class="product-section" style="max-width: 1200px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: center;">
+            <div>
+                <h2 style="color: white; margin-bottom: 20px;">Kunjungi <span style="color: var(--gold, #C5A059);">Toko Kami</span></h2>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px;">Kami siap melayani kebutuhan sembako Anda setiap hari.</p>
+                <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border: 1px solid rgba(197, 160, 89, 0.2);">
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                        <i class="fas fa-map-marker-alt" style="color: var(--gold, #C5A059); font-size: 24px;"></i>
+                        <div>
+                            <h4 style="margin: 0; color: white;">Lokasi Outlet</h4>
+                            <p style="margin: 5px 0 0; font-size: 14px; color: rgba(255,255,255,0.7);">Jl. Swadaya II Perum No.16, Rajeg,
+Kecamatan Rajeg, Kabupaten Tanggerang , Banten 15540
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="border-radius: 20px; overflow: hidden; height: 400px;">
+               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247.94765246970326!2d106.51673814704611!3d-6.108819165465661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e41ffcbf14a4973%3A0x139e9a646915d81d!2sEdi%20Suroso!5e0!3m2!1sid!2sid!4v1781886850047!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONI SECTION -->
+    <section id="testimoni" style="padding: 80px 0; background: white;">
+        <div class="product-section" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="color: var(--navy, #0D1B2A);">Apa Kata <span style="color: var(--gold, #C5A059);">Pelanggan Kami?</span></h2>
+                <p style="color: #666;">Kepuasan Anda adalah semangat kami dalam menyediakan bahan pangan terbaik.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                <!-- Testi 1 -->
+                <div style="background: #fdfdfd; padding: 40px 30px; border-radius: 20px; border: 1px solid #eee; position: relative; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                    <i class="fas fa-quote-left" style="position: absolute; top: 20px; right: 20px; font-size: 30px; color: #f1f1f1;"></i>
+                    <div style="color: var(--gold, #C5A059); margin-bottom: 15px;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; color: #555; line-height: 1.6; margin-bottom: 25px;"> "Beras Pandan Wangi-nya beneran pulen dan harum! Pengemasan sangat premium, rapi banget pake kardus. Adminnya juga ramah pas ditanya lewat WA." </p>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="https://ui-avatars.com/api/?name=Ibu+Siti&background=0D1B2A&color=fff" style="width: 50px; height: 50px; border-radius: 50%;" alt="User">
+                        <div>
+                            <h4 style="margin: 0; color: var(--navy, #0D1B2A);">Ibu Siti Aminah</h4>
+                            <p style="margin: 0; font-size: 13px; color: #999;">Pelanggan Setia</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testi 2 -->
+                <div style="background: #fdfdfd; padding: 40px 30px; border-radius: 20px; border: 1px solid #eee; position: relative; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                    <i class="fas fa-quote-left" style="position: absolute; top: 20px; right: 20px; font-size: 30px; color: #f1f1f1;"></i>
+                    <div style="color: var(--gold, #C5A059); margin-bottom: 15px;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p style="font-style: italic; color: #555; line-height: 1.6; margin-bottom: 25px;"> "Sangat membantu buat yang gak sempet ke pasar. Minyak goreng dan gula pasir sampai dalam kondisi aman. Proses verifikasi pembayarannya juga cepet banget!" </p>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="https://ui-avatars.com/api/?name=Andi+R&background=C5A059&color=fff" style="width: 50px; height: 50px; border-radius: 50%;" alt="User">
+                        <div>
+                            <h4 style="margin: 0; color: var(--navy, #0D1B2A);">Andi Ramadhan</h4>
+                            <p style="margin: 0; font-size: 13px; color: #999;">Wirausaha</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testi 3 -->
+                <div style="background: #fdfdfd; padding: 40px 30px; border-radius: 20px; border: 1px solid #eee; position: relative; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.02);">
+                    <i class="fas fa-quote-left" style="position: absolute; top: 20px; right: 20px; font-size: 30px; color: #f1f1f1;"></i>
+                    <div style="color: var(--gold, #C5A059); margin-bottom: 15px;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p style="font-style: italic; color: #555; line-height: 1.6; margin-bottom: 25px;"> "Kualitas sembakonya emang beda, kerasa banget pilihannya premium. Website-nya simpel dan gampang dipake buat belanja bulanan. Mantap Sembako Bule!" </p>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <img src="https://ui-avatars.com/api/?name=Siska+K&background=0D1B2A&color=fff" style="width: 50px; height: 50px; border-radius: 50%;" alt="User">
+                        <div>
+                            <h4 style="margin: 0; color: var(--navy, #0D1B2A);">Siska Kusuma</h4>
+                            <p style="margin: 0; font-size: 13px; color: #999;">Ibu Rumah Tangga</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: #0d1b2a; color: white; padding: 60px 0 20px; margin-top: 50px; font-family: sans-serif;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px;">
+            
+            <div>
+                <h3 style="color: #c5a059; margin-bottom: 15px;">Sembako Bule</h3>
+                <p style="font-size: 14px; line-height: 1.6; color: #adb5bd;">
+                    Penyedia kebutuhan pokok warga. Jual aneka kebutuhan dengan harga yang murah dan berkualitas
+                <p style="font-size: 14px; margin-top: 10px; color: #adb5bd;">
+                    <i class="fas fa-map-marker-alt"></i> Jl. Swadaya II Perum No.16, Rajeg. <br>Kabupaten Tangerang, Banten 15540
+                </p>
+            </div>
+
+            <div>
+                <h4 style="color: #c5a059; margin-bottom: 15px;">Tanya Jawab</h4>
+                <div style="font-size: 13px;">
+                    <details style="margin-bottom: 10px; cursor: pointer;">
+                        <summary style="font-weight: bold; margin-bottom: 5px;">Bisa anter ke rumah?</summary>
+                        <p style="color: #adb5bd; margin-left: 10px;">Bisa, khusus area sekitar toko gratis ongkir minimal belanja Rp 100rb.</p>
+                    </details>
+                    <details style="margin-bottom: 10px; cursor: pointer;">
+                        <summary style="font-weight: bold; margin-bottom: 5px;">Barang rusak gimana?</summary>
+                        <p style="color: #adb5bd; margin-left: 10px;">Langsung kabari admin WA, kita ganti baru atau uang kembali.</p>
+                    </details>
+                    <details style="margin-bottom: 10px; cursor: pointer;">
+                        <summary style="font-weight: bold; margin-bottom: 5px;">Buka jam berapa?</summary>
+                        <p style="color: #adb5bd; margin-left: 10px;">Toko buka setiap hari jam 08.00 - 20.00 WIB.</p>
+                    </details>
+                </div>
+            </div>
+
+            <div>
+                <h4 style="color: #c5a059; margin-bottom: 15px;">Pembayaran</h4>
+                <div style="display: flex; gap: 10px; margin-bottom: 20px; filter: grayscale(100%);">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" style="height: 20px; background: white; padding: 2px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" alt="Mandiri" style="height: 20px; background: white; padding: 2px;">
+                </div>
+                <h4 style="color: #c5a059; margin-bottom: 10px;">Hubungi Kami</h4>
+                <a href="https://wa.me/6285884753146" style="text-decoration: none; color: #25d366; font-weight: bold; font-size: 14px;">
+                    <i class="fab fa-whatsapp"></i>0858-8475-3146 
+                </a>
+            </div>
+
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #1a2e44; margin: 40px 0 20px;">
+        <p style="text-align: center; font-size: 12px; color: #6c757d;">
+            &copy; 2026 Toko Sembako Bule - Simple & Amanah.
+        </p>
+    </div>
+</footer>
+
+    <!-- CORE JAVASCRIPT FOR SIDEBAR TOGGLE & NAV LINKS -->
+    <script src="assets/js/sidebar.js"></script>
+
+    <!-- Script Penghitung Dinamis Sinkron Admin -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. Ambil data produk yang sudah ada di LocalStorage
+    let products = JSON.parse(localStorage.getItem('sembako_products') || '[]');
+
+    // 2. Pilih semua kartu kategori yang ada di dalam HTML
+    const categoryCards = document.querySelectorAll('.category-card-box');
+
+    // 3. Looping ke setiap kartu untuk menghitung dan mengganti angkanya
+    categoryCards.forEach(card => {
+        // Ambil nama dari <h3>
+        const titleEl = card.querySelector('.category-name-title');
+        if (!titleEl) return;
+        const categoryName = titleEl.innerText.trim();
+
+        // Ambil ID dari href atribut (contoh: id dari "produk.html?id=1")
+        const href = card.getAttribute('href');
+        const categoryId = href ? href.split('id=')[1] : null;
+
+        // Hitung total produk: Cocokkan ID_Category ATAU Category_Product
+        const totalItems = products.filter(p => {
+            const matchId = categoryId && String(p.id_category) === String(categoryId);
+            const matchName = p.category_product === categoryName;
+            return matchId || matchName;
+        }).length;
+
+        // Masukkan hasil hitungan ke dalam <p class="category-product-count">
+        const countEl = card.querySelector('.category-product-count');
+        if (countEl) {
+            countEl.innerText = `${totalItems} Produk`;
+        }
+    });
+});
+</script>
+   
+</script>
+    <!-- SCRIPT AUTH JS -->
+    <script src="assets/js/auth.js"></script>
+
+
+</body>
+</html>

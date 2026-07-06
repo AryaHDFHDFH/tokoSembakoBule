@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proses Checkout - Toko Sembako Bule</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        :root {
+            --navy: #0A192F;
+            --navy-light: #172A45;
+            --gold: #F5A623;
+            --white: #FFFFFF;
+            --bg-light: #FAFAFA;
+            --text-dark: #111111;
+            --text-muted: #8892B0;
+            --border-color: #EDF2F7;
+            --success: #2ECC71;
+            --error: #E74C3C;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+        }
+
+        /* PREMIUM TOP HORIZONTAL NAVBAR */
+        .top-navbar {
+            background-color: var(--navy);
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--white);
+            font-size: 22px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--gold);
+        }
+
+        .nav-menu-desktop {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-menu-desktop a {
+            color: #CCD6F6;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-menu-desktop a:hover, .nav-menu-desktop a.active {
+            color: var(--gold);
+        }
+
+        .nav-icons-desktop {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .icon-link {
+            color: #CCD6F6;
+            font-size: 18px;
+            text-decoration: none;
+            position: relative;
+        }
+
+        /* 1. CONTAINER & GRID (Layout Dua Kolom) */
+.page-container { max-width: 1100px; margin: 40px auto; padding: 20px; }
+.checkout-grid { 
+    display: grid; 
+    grid-template-columns: 1.8fr 1.2fr; /* Kolom form lebih lebar */
+    gap: 30px; 
+    align-items: start;
+}
+
+/* 2. CARD STYLING (Box Rapih) */
+.checkout-card {
+    background: #ffffff;
+    border: 1px solid #edf2f7; /* Lebih lembut daripada var(--border-color) */
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.checkout-card h3 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--navy);
+    font-size: 18px;
+    border-bottom: 2px solid #f7fafc;
+    padding-bottom: 15px;
+}
+
+/* 3. FORM GROUP (Jarak antar input) */
+.form-group { margin-bottom: 22px; }
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background: #fcfcfc;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--gold);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+/* 4. CHECKOUT ITEMS (Ringkasan Pesanan) */
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    font-size: 14px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #edf2f7;
+}
+
+.cart-total {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy); /* Ubah ke navy agar lebih premium */
+}
+
+/* 5. RESPONSIVE (Jika dibuka di HP) */
+@media (max-width: 768px) {
+    .checkout-grid { grid-template-columns: 1fr; }
+}
+    </style>
+</head>
+<body>
+
+    
+    <!-- TOP HORIZONTAL NAVBAR -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <button class="menu-toggle" id="open-sidebar-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="nav-brand">Sembako<span>Bule</span></a>
+
+            <ul class="nav-menu-desktop">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang Kami</a></li>
+                <li><a href="index.html#kategori">Kategori</a></li>
+                <li><a href="index.html#produk">Produk Terbaru</a></li>
+                <li><a href="index.html#kontak">Lokasi</a></li>
+                <li><a href="index.html#testimoni">Testimoni</a></li>
+            </ul>
+
+             <div class="nav-icons-desktop">
+                <a href="cart.html" class="icon-link">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+              
+                <div id="auth-guest-links" style="display: flex; gap: 10px; align-items: center;">
+                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="register.html" class="btn-register">Daftar</a>
+                </div>
+
+                <!-- KONDISI 2: USER DROPDOWN (TAMPIL SAAT SUDAH LOGIN) -->
+                <div class="dropdown" id="auth-user-dropdown" style="display: none;">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-nav-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    </button>
+
+                    <div class="dropdown-content">
+                        <a href="profil.html">
+                            <i class="fas fa-id-badge"></i> Profil Saya
+                        </a>
+                        <a href="riwayat.html">
+                            <i class="fas fa-history"></i> Riwayat Pesanan
+                        </a>
+                        <a href="#" class="text-error btn-logout-action">
+                            <i class="fas fa-sign-out-alt"></i> Keluar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR OVERLAY & MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <aside class="left-sidebar" id="mobile-left-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">Sembako<span>Bule</span></a>
+            <button class="sidebar-close-btn" id="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu-list">
+                <li>
+                    <a href="index.html#home" class="sidebar-link">
+                        <i class="fas fa-home"></i> <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#kategori" class="sidebar-link">
+                        <i class="fas fa-th-large"></i> <span>Kategori</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#produk" class="sidebar-link">
+                        <i class="fas fa-box-open"></i> <span>Produk Terbaru</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#kontak" class="sidebar-link">
+                        <i class="fas fa-map-marker-alt"></i> <span>Lokasi Outlet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#tentang" class="sidebar-link">
+                        <i class="fas fa-info-circle"></i> <span>Tentang Toko</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html#testimoni" class="sidebar-link">
+                        <i class="fas fa-comment-dots"></i> <span>Testimoni</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div
+                style="padding: 0 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">Keranjang Belanja</span>
+                <a href="cart.html" style="color: var(--gold); font-size: 18px;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+
+
+            <!-- KONDISI USER LOGIN (MOBILE SIDEBAR) -->
+            <div id="sidebar-user-logged" style="display: none; width: 100%;">
+                <div class="sidebar-user-badge" style="margin-bottom: 15px;">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: var(--gold);"></i>
+                    <div class="user-details">
+                        <span class="user-name" id="user-sidebar-name">User Name</span>
+                    </div>
+                </div>
+                <a href="profil.html" class="sidebar-action-btn"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                <a href="riwayat.html" class="sidebar-action-btn"><i class="fas fa-history"></i> Riwayat</a>
+                <a href="#" class="sidebar-action-btn text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i>
+                    Keluar</a>
+            </div>
+
+            <!-- KONDISI GUEST LINKS (MOBILE SIDEBAR) -->
+            <div id="sidebar-guest-buttons" style="display: flex; gap: 10px; flex-direction: column; width: 100%;">
+                <a href="login.html" class="sidebar-action-btn"
+                    style="background: var(--gold); color: white; text-align: center;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="register.html" class="sidebar-action-btn"
+                    style="background: rgba(197,160,89,0.2); color: var(--gold); text-align: center; border: 1px solid var(--gold);">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="page-container">
+    <h2 class="page-title">Proses Checkout</h2>
+
+    <form id="checkoutForm" class="checkout-grid">
+        <div class="checkout-form-area">
+            <div class="checkout-card">
+                <h3>Informasi Pengiriman</h3>
+                <div class="form-group">
+                    <label>Nama Penerima</label>
+                    <input type="text" id="shippingName" class="form-control" readonly style="background: #eee;">
+                </div>
+                <div class="form-group">
+                    <label>No. Telepon / WhatsApp</label>
+                    <input type="text" id="shippingPhone" class="form-control" readonly style="background: #eee;">
+                </div>
+                <div class="form-group">
+                    <label>Alamat Pengiriman Lengkap</label>
+                    <textarea id="shippingAddress" class="form-control" rows="4" required></textarea>
+                </div>
+            </div>
+
+            <div class="checkout-card">
+                <h3>Konfirmasi Pembayaran</h3>
+                <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid var(--gold); margin-bottom: 20px;">
+                    <p>Silakan transfer ke: <strong>BCA: 1234-5678-90 a.n Toko Sembako Bule</strong></p>
+                </div>
+                    <div class="form-group">
+    <label>Transfer dari Bank / E-Wallet Apa?</label>
+    <select name="bank_name" class="form-control" required style="cursor: pointer;">
+        <option value="">-- Pilih Bank / E-Wallet --</option>
+        
+        <optgroup label="Bank Transfer">
+            <option value="BCA">BCA (Bank Central Asia)</option>
+            <option value="Mandiri">Bank Mandiri</option>
+            <option value="BRI">BRI (Bank Rakyat Indonesia)</option>
+            <option value="BNI">BNI (Bank Negara Indonesia)</option>
+            <option value="BSI">BSI (Bank Syariah Indonesia)</option>
+            <option value="CIMB Niaga">CIMB Niaga</option>
+            <option value="Permata">Bank Permata</option>
+        </optgroup>
+        
+        <optgroup label="E-Wallet / Uang Elektronik">
+            <option value="GoPay">GoPay</option>
+            <option value="OVO">OVO</option>
+            <option value="DANA">DANA</option>
+            <option value="ShopeePay">ShopeePay</option>
+            <option value="LinkAja">LinkAja</option>
+        </optgroup>
+    </select>
+</div>
+                <div class="form-group">
+                    <label>Upload Bukti Transfer</label>
+                    <input type="file" id="proofImage" accept="image/jpeg, image/png" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-summary-area">
+            <div class="checkout-card" style="position: sticky; top: 100px;">
+                <h3>Ringkasan Pesanan</h3>
+                <div id="checkoutItemsList" style="margin-bottom: 20px;">
+                    </div>
+                <div style="border-top: 2px solid var(--navy); padding-top: 20px;">
+                    <span style="font-size: 18px;">Total Tagihan</span>
+                    <div id="checkoutTotalLabel" class="cart-total">Rp 0</div>
+                </div>
+               <button type="submit" class="btn-primary" style="width: 100%; padding: 15px; background: var(--navy); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 20px;">
+    Proses Pembayaran
+</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+ 
+   <script src="assets/js/auth.js"></script>
+    <script src="assets/js/transaksi.js"></script>
+
+    <script src="assets/js/sidebar.js"></script>
+</body>
+</html>

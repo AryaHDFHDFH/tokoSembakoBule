@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Pesanan Anda - Toko Sembako Bule</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --navy: #0A192F;
+            --navy-light: #172A45;
+            --gold: #D4AF37;
+            --white: #ffffff;
+            --text-muted: #8892B0;
+            --bg-body: #fafafa;
+            --success: #00cc66;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ==========================================
+           PAGE CONTAINER - DIPERBAIKI
+           ========================================== */
+        .page-container {
+            max-width: 1200px;
+            margin: 100px auto 50px auto;
+            padding: 0 20px;
+            min-height: 65vh;
+            flex: 1;
+        }
+
+        .page-title {
+            color: var(--navy);
+            margin-bottom: 35px;
+            font-size: 28px;
+            border-bottom: 3px solid var(--gold);
+            padding-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .page-title i {
+            color: var(--gold);
+            margin-right: 10px;
+        }
+
+        /* ==========================================
+           RIWAYAT CONTENT AREA
+           ========================================== */
+        #riwayatContentArea {
+            min-height: 300px;
+            margin-top: 20px;
+        }
+
+        /* ==========================================
+           ALERT SYSTEM
+           ========================================== */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-success {
+            background-color: #e6fffa;
+            color: #234e52;
+            border-color: #00cc66;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================================
+           TABLE STYLING - DIPERBAIKI AGAR TIDAK KEPOTONG
+           ========================================== */
+        .table-responsive {
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 700px;
+            /* Supaya tabel tidak terlalu sempit */
+            font-size: 14px;
+        }
+
+        .cart-table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            padding: 12px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-bottom: 2px solid #edf2f7;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .cart-table td {
+            padding: 14px;
+            border-bottom: 1px solid #edf2f7;
+            color: #2d3748;
+            vertical-align: middle;
+            word-break: break-word;
+        }
+
+        .cart-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .cart-table tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        /* KOLOM TERTENTU DIBUAT LEBIH RAPI */
+        .cart-table td:first-child {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .cart-table td:nth-child(2) {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .cart-table td:nth-child(3) {
+            max-width: 200px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cart-table td:nth-child(4) {
+            font-weight: 600;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        .cart-table td:nth-child(5) {
+            white-space: nowrap;
+        }
+
+        .cart-table td:last-child {
+            white-space: nowrap;
+        }
+
+        /* ==========================================
+           BUTTON STYLING
+           ========================================== */
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 12px;
+            border: 1px solid var(--navy);
+            color: var(--navy);
+            background: transparent;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--navy);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(10, 25, 47, 0.2);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(10, 25, 47, 0.2);
+        }
+
+        /* ==========================================
+           EMPTY STATE
+           ========================================== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-state i {
+            font-size: 72px;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            color: var(--navy);
+            font-size: 20px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 10px 0 25px 0;
+        }
+
+        /* ==========================================
+           BADGE STATUS
+           ========================================== */
+        .badge-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media screen and (max-width: 768px) {
+            .page-container {
+                margin: 80px auto 30px auto;
+                padding: 0 15px;
+            }
+
+            .page-title {
+                font-size: 22px;
+            }
+
+            .table-responsive {
+                padding: 12px;
+            }
+
+            .cart-table {
+                font-size: 12px;
+                min-width: 600px;
+            }
+
+            .cart-table th {
+                padding: 8px 10px;
+                font-size: 10px;
+            }
+
+            .cart-table td {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .cart-table td:nth-child(3) {
+                max-width: 150px;
+                font-size: 11px;
+            }
+
+            .btn-outline {
+                font-size: 11px;
+                padding: 4px 10px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .page-container {
+                margin: 70px auto 20px auto;
+                padding: 0 10px;
+            }
+
+            .page-title {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .table-responsive {
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .cart-table {
+                font-size: 11px;
+                min-width: 500px;
+            }
+
+            .cart-table th {
+                padding: 6px 8px;
+                font-size: 9px;
+            }
+
+            .cart-table td {
+                padding: 8px;
+                font-size: 11px;
+            }
+
+            .cart-table td:nth-child(3) {
+                max-width: 100px;
+                font-size: 10px;
+            }
+
+            .btn-outline {
+                font-size: 10px;
+                padding: 3px 8px;
+            }
+        }
+
+        /* ==========================================
+           NAVBAR STYLES (DARI STYLE.CSS)
+           ========================================== */
+        .top-navbar {
+            background: var(--navy);
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--gold);
+        }
+
+        .nav-menu-desktop {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu-desktop a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu-desktop a:hover {
+            color: var(--gold);
+        }
+
+        .nav-icons-desktop {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-link {
+            color: var(--white);
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        .btn-login {
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-register {
+            background: var(--gold);
+            color: var(--navy);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-register:hover {
+            background: #c5a037;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .dropbtn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: var(--white);
+            min-width: 200px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 8px 0;
+            z-index: 1001;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background: #f5f5f5;
+        }
+
+        .dropdown-content .text-error {
+            color: #dc2626;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Sidebar */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .left-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: var(--navy);
+            z-index: 2001;
+            transition: left 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar-brand {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .sidebar-brand span {
+            color: var(--gold);
+        }
+
+        .sidebar-close-btn {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+        }
+
+        .sidebar-menu-list li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--gold);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-action-btn.text-error {
+            color: #dc2626;
+        }
+
+        .sidebar-user-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .user-name {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        @media screen and (max-width: 992px) {
+            .nav-menu-desktop {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .nav-icons-desktop .btn-login,
+            .nav-icons-desktop .btn-register {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP HORIZONTAL NAVBAR -->
+    <nav class="top-navbar">
+        <div class="nav-container">
+            <button class="menu-toggle" id="open-sidebar-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="nav-brand">Sembako<span>Bule</span></a>
+
+            <ul class="nav-menu-desktop">
+                <li><a href="index.html#home">Beranda</a></li>
+                <li><a href="index.html#tentang">Tentang Kami</a></li>
+                <li><a href="index.html#kategori">Kategori</a></li>
+                <li><a href="index.html#produk">Produk Terbaru</a></li>
+                <li><a href="index.html#kontak">Lokasi</a></li>
+                <li><a href="index.html#testimoni">Testimoni</a></li>
+            </ul>
+
+            <div class="nav-icons-desktop">
+                <a href="cart.html" class="icon-link">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+
+                <div id="auth-guest-links" style="display: flex; gap: 10px; align-items: center;">
+                    <a href="login.html" class="btn-login">Login</a>
+                    <a href="register.html" class="btn-register">Daftar</a>
+                </div>
+
+                <div class="dropdown" id="auth-user-dropdown" style="display: none;">
+                    <button class="dropbtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-nav-name">User</span>
+                        <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="profil.html"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                        <a href="riwayat.html"><i class="fas fa-history"></i> Riwayat Pesanan</a>
+                        <a href="#" class="text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="left-sidebar" id="mobile-left-sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="sidebar-brand">Sembako<span>Bule</span></a>
+            <button class="sidebar-close-btn" id="close-sidebar-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="sidebar-menu-list">
+                <li><a href="index.html#home" class="sidebar-link"><i class="fas fa-home"></i> <span>Home</span></a></li>
+                <li><a href="index.html#kategori" class="sidebar-link"><i class="fas fa-th-large"></i> <span>Kategori</span></a></li>
+                <li><a href="index.html#produk" class="sidebar-link"><i class="fas fa-box-open"></i> <span>Produk Terbaru</span></a></li>
+                <li><a href="index.html#kontak" class="sidebar-link"><i class="fas fa-map-marker-alt"></i> <span>Lokasi Outlet</span></a></li>
+                <li><a href="index.html#tentang" class="sidebar-link"><i class="fas fa-info-circle"></i> <span>Tentang Toko</span></a></li>
+                <li><a href="index.html#testimoni" class="sidebar-link"><i class="fas fa-comment-dots"></i> <span>Testimoni</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <div style="padding: 0 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="color: rgba(255,255,255,0.6); font-size: 14px;">Keranjang Belanja</span>
+                <a href="cart.html" style="color: var(--gold); font-size: 18px;">
+                    <i class="fas fa-shopping-cart"></i>
+                </a>
+            </div>
+            <div id="sidebar-user-logged" style="display: none; width: 100%;">
+                <div class="sidebar-user-badge">
+                    <i class="fas fa-user-circle" style="font-size: 24px; color: var(--gold);"></i>
+                    <div class="user-details">
+                        <span class="user-name" id="user-sidebar-name">User Name</span>
+                    </div>
+                </div>
+                <a href="profil.html" class="sidebar-action-btn"><i class="fas fa-id-badge"></i> Profil Saya</a>
+                <a href="riwayat.html" class="sidebar-action-btn"><i class="fas fa-history"></i> Riwayat</a>
+                <a href="#" class="sidebar-action-btn text-error btn-logout-action"><i class="fas fa-sign-out-alt"></i> Keluar</a>
+            </div>
+            <div id="sidebar-guest-buttons" style="display: flex; gap: 10px; flex-direction: column; width: 100%;">
+                <a href="login.html" class="sidebar-action-btn" style="background: var(--gold); color: white; text-align: center; justify-content: center;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </a>
+                <a href="register.html" class="sidebar-action-btn" style="background: rgba(197,160,89,0.2); color: var(--gold); text-align: center; border: 1px solid var(--gold); justify-content: center;">
+                    <i class="fas fa-user-plus"></i> Daftar
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="page-container">
+        <h2 class="page-title">
+            <i class="fas fa-receipt"></i> Riwayat Pesanan Anda
+        </h2>
+
+        <div class="alert alert-success" id="successAlert">
+            ✓ Pesanan Anda berhasil dibuat! Silakan pantau status pembayaran secara berkala.
+        </div>
+
+        <div id="riwayatContentArea"></div>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/riwayat.js"></script>
+    <script src="assets/js/sidebar.js"></script>
+</body>
+</html>
